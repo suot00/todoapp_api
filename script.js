@@ -164,7 +164,6 @@ todo_option_item.forEach((btn) => {
     btn.addEventListener("change", function () {
         let optionSelected = getOptionSelected();
         getTodosAPI(optionSelected);
-        console.log(optionSelected)
     });
 });
 
