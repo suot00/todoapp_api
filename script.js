@@ -7,16 +7,16 @@ let isUpdate = false;
 let idUpdate = null; 
 
 
-function getTodosAPI(status) {
-  switch (status) {
+function getTodosAPI(completed) {
+  switch (completed) {
       case "all": {
            return axios.get(todoApi);
       }
       case "active": {
-           return axios.get(todoApi+"?status=true");     
+           return axios.get(todoApi+"?completed=true");     
       }
       case "unactive": {
-           return axios.get(todoApi+"?status=false");
+           return axios.get(todoApi+"?completed=false");
       }
       default: {
           return axios.get(todoApi);
@@ -57,9 +57,9 @@ function renderUI(arr) {
           <ul class="taskItem">
           <li class="task">
               <label for="${t.id}" class="taskLabel">
-                  <input type="checkbox" class="taskIp" id="${t.id}" ${t.status ? "checked" : ""} 
+                  <input type="checkbox" class="taskIp" id="${t.id}" ${t.completed ? "checked" : ""} 
                   onclick="toggleStatus(${t.id})">
-                  <p class="nameTask ${t.status ? "active-todo" : ""}">${t.title}</p>
+                  <p class="nameTask ${t.completed ? "active-todo" : ""}">${t.title}</p>
              </label>       
           <div class="menu-task">
           <button class="edit-task" onclick="updateTitle(${t.id})">Edit
@@ -81,9 +81,10 @@ function createId() {
 
 function createTodoAPI(title) {
   return axios.post(todoApi, {
+      userId:1,
       id: createId(),
       title: title,
-      status: false,
+      completed: false,
   });
 }
 
@@ -134,7 +135,7 @@ function updateTodoAPI(todo) {
 async function toggleStatus(id) {
   try {
       let todo = todos.find((todo) => todo.id == id);
-      todo.status = !todo.status;
+      todo.completed = !todo.completed;
 
       let res = await updateTodoAPI(todo);
 
@@ -163,6 +164,7 @@ todo_option_item.forEach((btn) => {
     btn.addEventListener("change", function () {
         let optionSelected = getOptionSelected();
         getTodosAPI(optionSelected);
+        console.log(optionSelected)
     });
 });
 

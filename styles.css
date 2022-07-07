@@ -44,9 +44,9 @@ body {
    margin: 0px 8px;
    font-size:17px;
 }
-.filterTask span.active{
+/* .filterTask span.active{
     color:#3c87ff;
-}
+} */
 .clear-btn{
     font-size:17px;
     color:gray;
